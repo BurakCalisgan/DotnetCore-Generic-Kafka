@@ -9,10 +9,10 @@ namespace Auth.Api.Application.Commands.RegisterUser;
 public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Guid>
 {
     private readonly ILogger<RegisterUserCommandHandler> _logger;
-    private readonly IdentityDbContext _dbContext;
+    private readonly AuthDbContext _dbContext;
     private readonly IKafkaMessageBus<string, User> _messageBus;
 
-    public RegisterUserCommandHandler(ILogger<RegisterUserCommandHandler> logger, IdentityDbContext dbContext,
+    public RegisterUserCommandHandler(ILogger<RegisterUserCommandHandler> logger, AuthDbContext dbContext,
         IKafkaMessageBus<string, User> messageBus)
     {
         _logger = logger;
@@ -41,6 +41,9 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, G
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         await _messageBus.PublishAsync(request.Email, user);
+        
+        _logger.LogInformation("RegisterUserCommand Handler started.");
+        
         return user.Id;
     }
 }

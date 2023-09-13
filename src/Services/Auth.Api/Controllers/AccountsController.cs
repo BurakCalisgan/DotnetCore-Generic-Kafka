@@ -6,12 +6,12 @@ namespace Auth.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AccountController : ControllerBase
+public class AccountsController : ControllerBase
 {
-    private readonly ILogger<AccountController> _logger;
+    private readonly ILogger<AccountsController> _logger;
     private readonly IMediator _mediator;
 
-    public AccountController(ILogger<AccountController> logger, IMediator mediator)
+    public AccountsController(ILogger<AccountsController> logger, IMediator mediator)
     {
         _logger = logger;
         _mediator = mediator;
