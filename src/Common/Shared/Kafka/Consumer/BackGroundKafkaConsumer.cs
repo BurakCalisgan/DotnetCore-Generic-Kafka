@@ -29,6 +29,7 @@ public class BackGroundKafkaConsumer<TKey, TValue> : BackgroundService
 
         using var consumer = builder.Build();
         consumer.Subscribe(_config.Topic);
+        await Task.Yield();
 
         while (!stoppingToken.IsCancellationRequested)
         {
